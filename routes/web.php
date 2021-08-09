@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\TagController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::resource('tag', TagController::class);
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes([
+    'register' => false
+]);
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
