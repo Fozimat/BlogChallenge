@@ -41,8 +41,8 @@
                             style="margin-left: 100px">
                             <a class="nav-link" href="{{ route('tag.index') }}">Tag</a>
                         </li>
-                        <li class="nav-item ml-5">
-                            <a class="nav-link" href="#">Category</a>
+                        <li class="nav-item ml-5 {{ request()->is('admin/category*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('category.index') }}">Category</a>
                         </li>
                         <li class="nav-item ml-5">
                             <a class="nav-link" href="#">Post</a>

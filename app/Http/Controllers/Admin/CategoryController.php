@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TagRequest;
+use App\Http\Requests\CategoryRequest;
 
-class TagController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::paginate(5);
-        return view('admin.tag.index', compact(['tags']));
+        $categories = Category::paginate(5);
+        return view('admin.category.index', compact(['categories']));
     }
 
     /**
@@ -27,7 +27,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('admin.tag.create');
+        return view('admin.category.create');
     }
 
     /**
@@ -36,10 +36,10 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TagRequest $request)
+    public function store(CategoryRequest $request)
     {
-        $data = Tag::create($request->all());
-        return redirect()->route('tag.index')->with('status', 'Data successfully added');
+        $data = Category::create($request->all());
+        return redirect()->route('category.index')->with('status', 'Data successfully added');
     }
 
     /**

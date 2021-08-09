@@ -1,14 +1,14 @@
 @extends('layouts.app')
-@section('title', 'Tag List')
+@section('title', 'Category List')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><strong>Tag</strong></div>
+                <div class="card-header"><strong>Category</strong></div>
 
                 <div class="card-body">
-                    <a href="{{ route('tag.create') }}" class="btn btn-primary mb-3">Add Tag</a>
+                    <a href="{{ route('category.create') }}" class="btn btn-primary mb-3">Add category</a>
 
                     @if (session('status'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,13 +28,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($tags as $key => $tag)
+                            @forelse ($categories as $key => $category)
                             <tr>
-                                <td>{{ $tags->firstItem() + $key }}</td>
-                                <td>{{ $tag->name }}</td>
+                                <td>{{ $categories->firstItem() + $key }}</td>
+                                <td>{{ $category->name }}</td>
                                 <td>
-                                    <a href="{{ route('tag.edit', $tag->id) }}" class="btn btn-success">edit</a> |
-                                    <form action="{{ route('tag.destroy', $tag->id) }}" method="POST" class="d-inline">
+                                    <a href="{{ route('category.edit', $category->id) }}"
+                                        class="btn btn-success">edit</a> |
+                                    <form action="{{ route('category.destroy', $category->id) }}" method="POST"
+                                        class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">delete</button>
@@ -43,13 +45,13 @@
                             </tr>
                             @empty
                             <tr>
-                                <td class="text-center" colspan="3"><strong>Tag Not Found</strong></td>
+                                <td class="text-center" colspan="3"><strong>Category Not Found</strong></td>
                             </tr>
                             @endforelse
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-end">
-                        {{ $tags->links() }}
+                        {{ $categories->links() }}
                     </div>
                 </div>
             </div>
