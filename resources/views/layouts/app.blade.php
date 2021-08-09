@@ -44,8 +44,8 @@
                         <li class="nav-item ml-5 {{ request()->is('admin/category*') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('category.index') }}">Category</a>
                         </li>
-                        <li class="nav-item ml-5">
-                            <a class="nav-link" href="#">Post</a>
+                        <li class="nav-item ml-5 {{ request()->is('admin/post*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('post.index') }}">Post</a>
                         </li>
                     </ul>
 
