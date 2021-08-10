@@ -59,9 +59,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.category.edit', compact(['category']));
     }
 
     /**
@@ -71,9 +71,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $category->update($request->all());
+        return redirect()->route('category.index')->with('status', 'Data successfully edited');
     }
 
     /**
@@ -82,8 +83,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        if ($category->posts->count()) {
+            return back()->with('status', 'Cannot delete, category has post');
+        }
+        $category->delete();
+        return redirect()->route('category.index')->with('status', 'Data successfully deleted');
     }
 }
