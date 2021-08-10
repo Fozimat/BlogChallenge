@@ -25,9 +25,9 @@
                                 <th scope="col" width="5%">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Category</th>
-                                <th scope="col">User Post</th>
+                                <th scope="col">Author</th>
                                 <th scope="col">Image</th>
-                                <th scope="col" width="20%">Action</th>
+                                <th scope="col" width="25%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,7 +35,12 @@
                             <tr>
                                 <td>{{ $posts->firstItem() + $key }}</td>
                                 <td>{{ $post->title }}</td>
+                                <td>{{ $post->category->name }}</td>
+                                <td>{{ $post->user->name }}</td>
+                                <td><img width="100px" height="100px" src="{{ asset('storage/posts/'.$post->image) }}"
+                                        alt=""></td>
                                 <td>
+                                    <a href="{{ route('post.show', $post->id) }}" class="btn btn-info">show</a> |
                                     <a href="{{ route('post.edit', $post->id) }}" class="btn btn-success">edit</a> |
                                     <form action="{{ route('post.destroy', $post->id) }}" method="POST"
                                         class="d-inline">

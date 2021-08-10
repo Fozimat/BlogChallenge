@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -14,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::with(['user', 'category'])->paginate(5);
         return view('admin.post.index', compact(['posts']));
     }
 
@@ -25,7 +29,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.post.create', compact(['categories', 'tags']));
     }
 
     /**
@@ -34,9 +40,23 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        if ($request->hasFile('image')) {
+            $filename = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('posts', $filename, 'public');
+        }
+
+        $post = Post::create([
+            'title' => $request->title,
+            'category_id' => $request->category,
+            'post' => $request->post,
+            'image' => $filename,
+            'user_id' => auth()->user()->id,
+        ]);
+        $post->tags()->attach($request->tags);
+
+        return redirect()->route('post.index')->with('status', 'Post successfully added');
     }
 
     /**
