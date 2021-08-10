@@ -33,4 +33,8 @@ class HomeController extends Controller
     public function tag(Tag $tag)
     {
     }
+
+    public function category(Category $category)
+    {
+    }
 }

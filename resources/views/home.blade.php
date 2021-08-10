@@ -11,7 +11,9 @@
                         src="{{ asset('storage/posts/'.$post->image) }}">
                     <div class="card-body">
                         <h5 class="card-title"><a href="{{ route('show.post', $post->id) }}">{{ $post->title }}</a></h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ $post->category->name }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a
+                                href="{{ route('show.category', $post->category->id) }}">{{ $post->category->name }}</a>
+                        </h6>
                         <p class="card-text">{{ $post->post }}</p>
                         @foreach ($post->tags as $tag)
                         <a href="{{ route('show.tag', $tag->name) }}" class="badge badge-info">#{{ $tag->name }}</a>

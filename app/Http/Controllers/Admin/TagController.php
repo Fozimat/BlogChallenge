@@ -59,9 +59,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('admin.tag.edit', compact(['tag']));
     }
 
     /**
@@ -71,9 +71,10 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TagRequest $request, Tag $tag)
     {
-        //
+        $data = $tag->update($request->all());
+        return redirect()->route('tag.index')->with('status', 'Data successfully edited');
     }
 
     /**
@@ -82,8 +83,12 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        //
+        if ($tag->posts->count()) {
+            return back()->with('status', 'Cannot delete, Tags owned by Post');
+        }
+        $tag->delete();
+        return redirect()->route('tag.index')->with('status', 'Data successfully deleted');
     }
 }
