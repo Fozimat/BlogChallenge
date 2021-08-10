@@ -63,7 +63,9 @@
                                 <select class="form-control js-example-basic-multiple @error('tags') is-invalid
                                 @enderror" id="multiple" name="tags[]" multiple="multiple">
                                     @foreach ($tags as $tag)
-                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    <option value="{{ $tag->id }}"
+                                        {{ (collect(old("tags"))->contains($tag->id) ? "selected": '') }}>
+                                        {{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('tags')
