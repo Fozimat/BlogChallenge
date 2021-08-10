@@ -25,4 +25,12 @@ class HomeController extends Controller
         $posts = Post::with(['tags', 'category'])->get();
         return view('home', compact(['posts']));
     }
+
+    public function show(Post $post)
+    {
+    }
+
+    public function tag(Tag $tag)
+    {
+    }
 }

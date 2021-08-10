@@ -32,3 +32,5 @@ Auth::routes([
 ]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/show/{post}', [App\Http\Controllers\HomeController::class, 'show'])->name('show.post');
+Route::get('/tag/{tag}', [App\Http\Controllers\HomeController::class, 'tag'])->name('show.tag');
