@@ -40,6 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav">
+                        @auth
                         <li class="nav-item {{ request()->is('admin/tag*') ? 'active': '' }}"
                             style="margin-left: 100px">
                             <a class="nav-link" href="{{ route('tag.index') }}">Tag</a>
@@ -50,6 +51,13 @@
                         <li class="nav-item ml-5 {{ request()->is('admin/post*') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('post.index') }}">Post</a>
                         </li>
+                        @endauth
+
+                        @guest
+                        <li class="nav-item active" style="margin-left: 100px">
+                            <a class="nav-link" href="#">Post</a>
+                        </li>
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->
