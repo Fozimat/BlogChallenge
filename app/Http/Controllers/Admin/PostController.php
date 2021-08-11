@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -18,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user', 'category'])->paginate(5);
+        $posts = Post::with(['user', 'category', 'tags'])->paginate(5);
         return view('admin.post.index', compact(['posts']));
     }
 
@@ -76,9 +77,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.post.edit', compact(['post', 'categories', 'tags']));
     }
 
     /**
@@ -88,9 +91,25 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+        if ($request->hasFile('image')) {
+            Storage::delete('public/posts/' . $post->image);
+            $fileName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('posts', $fileName, 'public');
+        } else {
+            $fileName = $request->old_image;
+        }
+        $post->update([
+            'title' => $request->title,
+            'post' => $request->post,
+            'image' => $fileName,
+            'user_id' => $post->user->id,
+            'category_id' => $request->category
+        ]);
+        $post->tags()->sync($request->tags);
+
+        return redirect()->route('post.index')->with('status', 'Post successfully edited');
     }
 
     /**

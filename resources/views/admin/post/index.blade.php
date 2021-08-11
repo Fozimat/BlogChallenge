@@ -25,7 +25,7 @@
                                 <th scope="col" width="5%">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Category</th>
-                                <th scope="col">Author</th>
+                                <th scope="col">Tags</th>
                                 <th scope="col">Image</th>
                                 <th scope="col" width="25%">Action</th>
                             </tr>
@@ -36,7 +36,11 @@
                                 <td>{{ $posts->firstItem() + $key }}</td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->category->name }}</td>
-                                <td>{{ $post->user->name }}</td>
+                                <td>
+                                    @foreach ($post->tags as $tag)
+                                    <a href="#" class="badge badge-info">#{{ $tag->name }}</a>
+                                    @endforeach
+                                </td>
                                 <td><img width="100px" height="100px" src="{{ asset('storage/posts/'.$post->image) }}"
                                         alt=""></td>
                                 <td>

@@ -26,7 +26,7 @@ class PostRequest extends FormRequest
         return [
             'title' => 'required|min:3',
             'post' => 'required|min:20',
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:1000',
+            'image' => request()->isMethod('put') ? 'image|mimes:png,jpg,jpeg|max:1000' : 'required|image|mimes:png,jpg,jpeg|max:1000',
             'category' => 'required|integer|exists:categories,id',
             'tags' => 'required'
         ];
