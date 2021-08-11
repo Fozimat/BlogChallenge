@@ -50,7 +50,7 @@
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">delete</button>
+                                        <button type="submit" class="btn btn-danger show-confirm">delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -70,3 +70,26 @@
     </div>
 </div>
 @endsection
+@push('after-script')
+<script>
+    $('.show-confirm').click(function(e) {
+      var form =  $(this).closest("form");
+      var name = $(this).data("name");
+      event.preventDefault();
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        })
+    })
+</script>
+@endpush
