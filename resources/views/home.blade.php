@@ -6,7 +6,7 @@
         <div class="row">
             @forelse ($posts as $post)
             <div class="col-md-3 d-flex">
-                <div class="card mb-3" style="width: 18rem;">
+                <div class="card mb-3">
                     <img class="card-img-top" style="width: 100%; height: 15vw; object-fit: cover;"
                         src="{{ asset('storage/posts/'.$post->image) }}">
                     <div class="card-body">
